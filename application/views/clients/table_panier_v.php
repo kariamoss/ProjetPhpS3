@@ -49,4 +49,4 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </div>
 
 
-<p class="footer">Page rendered in <strong>{elapsed_time}</strong> seconds</p>
+<p class="footer"><?php echo $prix; ?></p>

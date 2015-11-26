@@ -46,6 +46,7 @@ class Panier_c extends CI_Controller
         }
         else{
             $data['panier'] = $this->Panier_m->getPanier();
+            $data['prix'] = $this->Panier_m->coutTotalPanier();
             $this->load->view('clients/table_panier_v', $data);
             $this->load->view('foot_v');
         }
