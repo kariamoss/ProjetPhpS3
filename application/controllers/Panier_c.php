@@ -39,13 +39,19 @@ class Panier_c extends CI_Controller
         $this->check_droit();
         $this->load->view('head_v');
         $this->load->view('clients/navClient_v');
-        $data['panier'] = $this->Panier_m->getPanier();
-        $this->load->view('clients/table_panier_v', $data);
-        $this->load->view('foot_v');
-
+        $panierVide = $this->Panier_m->isPanierVide();
+        if($panierVide == 0){
+            $this->load->view('clients/table_panier_vide_v');
+            $this->load->view('foot_v');
+        }
+        else{
+            $data['panier'] = $this->Panier_m->getPanier();
+            $this->load->view('clients/table_panier_v', $data);
+            $this->load->view('foot_v');
+        }
     }
 
-    //TODO Décrémenter le stock et vérifier si il reste du stock
+    //TODO Décrémenter le panier et vérifier si il reste du stock
     public function ajouterAuPanier($id)
     {
         $this->check_droit();
@@ -57,9 +63,10 @@ class Panier_c extends CI_Controller
         else{
             $this->Panier_m->updatePanier($id);
         }
-
         redirect('Panier_c/displayPanier');
     }
+
+
     public function supprimerDuPanier($id)
     {
         $this->check_droit();

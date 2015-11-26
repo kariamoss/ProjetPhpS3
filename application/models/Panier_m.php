@@ -38,16 +38,22 @@ class Panier_m extends CI_Model
   return $query->result();
  }
 
+ public function isPanierVide(){
+  $idUser = $this->session->userdata('id_user');
+  $this->db->select('id_produit')->from('panier')->where("id_user =".$idUser."");
+  $result = $this->db->get();
+  return $result->num_rows();
+ }
 
- //Vérifie que le produit existe déjà dans le panier
- //Si c'est le cas, renvoi un chiffre différent de 0, sinon renvoie 0
+
+ //Verifie que le produit existe deja� dans le panier
+ //Si c'est le cas, renvoi un chiffre different de 0, sinon renvoie 0
  public function verif_id_ajout($id){
   $idUser = $this->session->userdata('id_user');
   $this->db->select('id_produit')->from('panier')->where("id_produit",$id)->where("id_user =".$idUser."");
   $result = $this->db->get();
   return $result->num_rows();
  }
-
 
  //A appeler uniquement pour un produit déjà existant dans son produit et dont on veux incrémenter la quantité
  public function updatePanier($idProduit){
