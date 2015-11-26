@@ -10,7 +10,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <table>
         <caption>Recapitulatifs de votre panier</caption>
         <thead>
-        <tr><th>id_user</th><th>Nom</th><th>id_produit</th><th>Type</th></th><th>Quantite</th><th>Prix</th><th>Photo</th>
+        <tr><th>Nom</th><th>Marque</th></th><th>Quantite</th><th>Prix</th><th>Photo</th><th>Actions</th>
 
         </tr>
         </thead>
@@ -19,11 +19,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <?php if( $panier != NULL): ?>
             <?php foreach ($panier as $value): ?>
                 <tr><td>
-                        <?php echo $value->id_user; ?>
-                    </td><td>
                         <?= $value->nom; ?>
-                    </td><td>
-                        <?= $value->id_produit; ?>
                     </td><td>
                         <?= $value->libelle; ?>
                     </td><td>
@@ -38,9 +34,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     </td>
                     <td>
                         <a href="<?php echo site_url("Panier_c/supprimerDuPanier")."/".$value->id_produit; ?>"
-                           class="button">-</a>
+                           class="button tiny round">-</a>
                         <a href="<?php echo site_url("Panier_c/ajouterAuPanier")."/".$value->id_produit; ?>"
-                           class="button">+</a>
+                           class="button tiny round">+</a>
                     </td>
                     <?php //if(isset($_SESSION['droit']) and $_SESSION['droit']=='DROITadmin'): ?>
                     <td></td>

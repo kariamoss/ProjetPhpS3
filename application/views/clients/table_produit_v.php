@@ -10,7 +10,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <table>
         <caption>Recapitulatifs des produits</caption>
         <thead>
-        <tr><th>id</th><th>Type</th><th>Nom</th><th>Prix</th><th>Photo</th>
+        <tr><th>Marque</th><th>Nom</th><th>Prix</th><th>Photo</th><th>Action</th>
         </tr>
         </thead>
         <tbody>
@@ -18,8 +18,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <?php if( $produit != NULL): ?>
             <?php foreach ($produit as $value): ?>
                 <tr><td>
-                        <?php echo $value->id; ?>
-                    </td><td>
                         <?= $value->libelle; ?>
                     </td><td>
                         <?= $value->nom; ?>
@@ -31,7 +29,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                              alt="image de <?= $value->libelle; ?>" >
                     </td>
                     <td>
-                        <a href="<?php echo site_url("Panier_c/ajouterAuPanier")."/".$value->id; ?>">Ajouter au panier</a>
+                        <a href="<?php echo site_url("Panier_c/ajouterAuPanier")."/".$value->id; ?>" class = "button small">Ajouter au panier</a>
                     </td>
 
                     <?php //if(isset($_SESSION['droit']) and $_SESSION['droit']=='DROITadmin'): ?>
