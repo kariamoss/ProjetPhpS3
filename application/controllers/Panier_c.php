@@ -45,7 +45,7 @@ class Panier_c extends CI_Controller
 
     }
 
-    //TODO Décrémenter le panier et vérifier si il reste du stock
+    //TODO Décrémenter le stock et vérifier si il reste du stock
     public function ajouterAuPanier($id)
     {
         $this->check_droit();
