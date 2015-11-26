@@ -2,6 +2,7 @@
 Who are we
 ###################
 
+Students of the Belfort's IUT in computer science :
 Mathieu POURCHOT
 Jehan MILLERET
 
