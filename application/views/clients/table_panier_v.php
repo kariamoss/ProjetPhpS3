@@ -40,13 +40,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     </td>
                     <?php //if(isset($_SESSION['droit']) and $_SESSION['droit']=='DROITadmin'): ?>
                     <td></td>
+
                     <?php //endif;?>
                 </tr>
+
             <?php endforeach; ?>
+
         <?php endif; ?>
+
         <tbody>
     </table>
 </div>
+<a href="<?php echo site_url("Panier_c/validerPanier")."/".$value->id_user; ?>"
+   class="button tiny">Valider ma commande</a>
 
 
 <p class="footer">Page rendered in <strong>{elapsed_time}</strong> seconds</p>

@@ -104,5 +104,15 @@ class Panier_m extends CI_Model
   $this->db->delete('panier' ,array('id_produit'=>$idProduit));
  }
 
+ public function insertCommande($idUser){
+  $array = $this->getPanier();
+  $prix = $array[4]->prix;
+
+  $date =  date('Y-m-d');
+  $sql = "insert into commande(id_commande,id_user,prix,date_achat,id_etat) VALUES
+            (NULL,".$idUser.",".$prix.",".$date.",1);";
+  $this->db->query($sql);
+ }
+
 }
  ?>

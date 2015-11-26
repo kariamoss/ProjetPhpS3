@@ -79,5 +79,11 @@ class Panier_c extends CI_Controller
         }
         redirect('/Panier_c/displayPanier');
     }
+
+    public function validerPanier($id){
+        $this->check_droit();
+        $this->Panier_m->insertCommande($id);
+        redirect("/Panier_c/displayProduits");
+    }
 }
 ?>
