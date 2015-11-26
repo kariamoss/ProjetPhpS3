@@ -12,7 +12,7 @@
     <section class="top-bar-section"> 
     <ul class="left">
     <li><a href="#">Passer ma commande pour cette semaine</a></li>
-    <li><a href="#">Consulter mes commandes</a></li>
+    <li><a href="<?php echo site_url('Commande_c/displayCommande');?>">Consulter mes commandes</a></li>
     <li><a href="#">Modifier mes coordonnées</a></li>
         <li class="active"><a  href="<?php echo site_url('Produit_c/displayProduits');?>" >Nos produits</a></li>
     </ul>

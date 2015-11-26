@@ -46,6 +46,7 @@ class Panier_c extends CI_Controller
         }
         else{
             $data['panier'] = $this->Panier_m->getPanier();
+            $data['prix'] = $this->Panier_m->coutTotalPanier();
             $this->load->view('clients/table_panier_v', $data);
             $this->load->view('foot_v');
         }
@@ -83,7 +84,7 @@ class Panier_c extends CI_Controller
     public function validerPanier($id){
         $this->check_droit();
         $this->Panier_m->insertCommande($id);
-        redirect("/Panier_c/displayProduits");
+        redirect('/Commande_c/displayCommande');
     }
 }
 ?>

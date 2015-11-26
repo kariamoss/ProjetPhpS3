@@ -50,9 +50,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
         <tbody>
     </table>
+
+    <a href="<?php echo site_url("Panier_c/validerPanier")."/".$value->id_user; ?>"
+       class="button small">Valider ma commande</a>
 </div>
-<a href="<?php echo site_url("Panier_c/validerPanier")."/".$value->id_user; ?>"
-   class="button tiny">Valider ma commande</a>
 
 
-<p class="footer">Page rendered in <strong>{elapsed_time}</strong> seconds</p>

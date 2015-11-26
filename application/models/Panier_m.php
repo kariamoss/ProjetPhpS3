@@ -68,7 +68,7 @@ class Panier_m extends CI_Model
  //A appeler uniquement pour un produit qui n'existe pas encore dans le panier
  public function insertPanier($idProduit){
   $id_user = $this->session->userdata('id_user');
-  $id_commande = '1'; //TODO A redefinir apres
+  $id_commande = '0'; //TODO A redefinir apres
   $quantite = '1';
   $date =  date('Y-m-d');
 
@@ -104,15 +104,25 @@ class Panier_m extends CI_Model
   $this->db->delete('panier' ,array('id_produit'=>$idProduit));
  }
 
+
  public function insertCommande($idUser){
   $array = $this->getPanier();
-  $prix = $array[4]->prix;
-
-  $date =  date('Y-m-d');
+  $prix = $this->coutTotalPanier();
+  $date = date('Y-m-d');
   $sql = "insert into commande(id_commande,id_user,prix,date_achat,id_etat) VALUES
-            (NULL,".$idUser.",".$prix.",".$date.",1);";
+            (NULL,".$idUser.",".$prix.",".date('Y-m-d').",1);";
   $this->db->query($sql);
  }
 
+
+ public function coutTotalPanier(){
+  $idUser = $this->session->userdata('id_user');
+  $this->db->select_sum('prix')->from('panier')->where("id_user =".$idUser."");
+  $query = $this->db->get();
+  $prixTotal['prix'] = $query->result();
+  $prixTotal = intval($prixTotal['prix'][0]->prix);
+  return $prixTotal;
+ }
+
 }
- ?>
+?>
