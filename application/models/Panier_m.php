@@ -77,9 +77,17 @@ class Panier_m extends CI_Model
   $row = $this->Produit_m->getProduit($idProduit);
   $prix = $row[0]->prix;
 
-  $sql = "INSERT INTO panier (id_panier, id_user, id_produit ,quantite ,prix ,id_commande, dateAjoutPanier)
-        values (NULL, $id_user, $idProduit, $quantite, $prix, $id_commande, $date );";
-  $this->db->query($sql);
+  $this->db->set('id_user',$id_user);
+  $this->db->set('id_produit',$idProduit);
+  $this->db->set('quantite',$quantite);
+  $this->db->set('prix',$prix);
+  $this->db->set('id_commande',$id_commande);
+  $this->db->set('dateAjoutPanier',date('Y-m-d'));
+  $this->db->insert('panier');
+
+  /*$sql = "INSERT INTO panier (id_panier, id_user, id_produit ,quantite ,prix ,id_commande, dateAjoutPanier)
+        values (NULL, $id_user, $idProduit, $quantite, $prix, $id_commande, ".date('Y-m-d')." );";
+  $this->db->query($sql);*/
 
  }
 
@@ -108,10 +116,12 @@ class Panier_m extends CI_Model
  public function insertCommande($idUser){
   $array = $this->getPanier();
   $prix = $this->coutTotalPanier();
-  $date = date('Y-m-d');
-  $sql = "insert into commande(id_commande,id_user,prix,date_achat,id_etat) VALUES
-            (NULL,".$idUser.",".$prix.",".date('Y-m-d').",1);";
-  $this->db->query($sql);
+
+  $this->db->set('id_user',$idUser);
+  $this->db->set('prix',$prix);
+  $this->db->set('date_achat',date('Y-m-d'));
+  $this->db->set('id_etat',1);
+  $this->db->insert('commande');
  }
 
 
@@ -123,6 +133,14 @@ class Panier_m extends CI_Model
   $prixTotal = intval($prixTotal['prix'][0]->prix);
   return $prixTotal;
  }
+
+public function supprimerPanier()
+{
+ $idUser = $this->session->userdata('id_user');
+
+ $sql = "DELETE from panier where id_user = $idUser";
+ $this->db->query($sql);
+}
 
 }
 ?>

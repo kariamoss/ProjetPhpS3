@@ -5,7 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <table>
         <caption> Commandes </caption>
         <thead>
-        <tr><th>Etat</th><th>Commande n°</th><th>Prix</th><th>Date Commande</th><th>Action</th>
+        <tr><th>Etat</th><th>Commande n&deg;</th><th>Prix</th><th>Date Commande</th>
         </tr>
         </thead>
         <tbody>
@@ -20,9 +20,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     </td><td>
                         <?= $value->date_achat;?>
                     </td>
-                    <td>
-                        <a href="#" class = "button tiny">Payer</a>
-                    </td>
+
 
                     <?php //if(isset($_SESSION['droit']) and $_SESSION['droit']=='DROITadmin'): ?>
                     <?php //endif;?>
@@ -33,5 +31,3 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </table>
 </div>
 
-
-<p class="footer">Page rendered in <strong>{elapsed_time}</strong> seconds</p>
