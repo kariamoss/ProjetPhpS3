@@ -4,6 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Commande_m extends CI_Model
 {
+
     public function getCommande()
     {
         $idUser = $this->session->userdata('id_user');
@@ -13,5 +14,11 @@ class Commande_m extends CI_Model
         $this->db->where("co.id_user =".$idUser."");
         $query = $this->db->get();
         return $query->result();
+    }
+    public function isCommandeVide(){
+        $idUser = $this->session->userdata('id_user');
+        $this->db->select('id_commande')->from('commande')->where("id_user =".$idUser."");
+        $result = $this->db->get();
+        return $result->num_rows();
     }
 }
