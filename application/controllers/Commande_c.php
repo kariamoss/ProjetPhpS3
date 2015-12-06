@@ -42,4 +42,14 @@ class Commande_c extends CI_Controller
         $this->load->view('clients/table_commande_v',$data);
         $this->load->view('foot_v');
     }
+
+    public function displayCommandeAdmin(){
+
+        $this->load->view('head_v');
+        $this->load->view('admin/navAdmin_v');
+        $data['commande']=$this->Commande_m->getAllCommande();
+        $this->load->view('clients/table_commande_v',$data);
+        $this->load->view('foot_v');
+    }
+
 }

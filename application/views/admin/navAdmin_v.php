@@ -17,8 +17,8 @@
       <a href="#">Gestion des commandes</a>
   
       <ul class="dropdown"> 
-        <li><a  href="<?php echo site_url('Produit_c/creerProduit');?>" > consulter et préparer les commandes</a></li>  
-        <li><a href="<?php echo site_url('Produit_c');?>" >afficher/editer/supprimer des commandes</a></li>
+        <li><a  href="<?php echo site_url('Commande_c/displayCommandeAdmin');?>" > consulter et préparer les commandes</a></li>
+        <li><a href="<?php echo site_url('Commande_c/displayCommandeAdmin');?>" >afficher/editer/supprimer des commandes</a></li>
       </ul>
     </li>
 
@@ -33,7 +33,7 @@
     <li class="has-dropdown">
      <a href="#">Gestion des clients</a> 
       <ul class="dropdown fixed"> 
-        <li><a  href="<?php echo site_url('Produit_c');?>" >afficher/editer/supprimer des clients</a></li>
+        <li><a  href="<?php echo site_url('Client_c/displayClients');?>" >afficher/editer/supprimer des clients</a></li>
         <li><a  href="<?php echo site_url('Produit_c/creerProduit');?>" > créer un client</a></li>  
       </ul>
     </li>

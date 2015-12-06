@@ -22,11 +22,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<?= $value->nom; ?>
 		</td><td>
 		<?= $value->prix; ?>
-		</td><td>
-		<?= $value->photo; ?>
-		</td><td>
-		<img style="width:40px;height:40px" src="<?php echo base_url();?>images/<?= $value->photo; ?>" alt="image de <?= $value->libelle; ?>" >
-		</td>
+		</td>><td>
+				<img style="width:40px;height:40px" src="<?php echo base_url();?>img/<?= $value->photo; ?>" alt="image de <?= $value->libelle; ?>" >
+			</td>
 		<?php //if(isset($_SESSION['droit']) and $_SESSION['droit']=='DROITadmin'): ?>
 		<td>
 			<a href="<?php echo base_url();?>index.php/Produit_c/modifierProduit/<?= $value->id; ?>">modifier</a>

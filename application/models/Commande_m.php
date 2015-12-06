@@ -14,4 +14,13 @@ class Commande_m extends CI_Model
         $query = $this->db->get();
         return $query->result();
     }
+
+    public function getAllCommande()
+    {
+        $this->db->select('e.libelle,co.date_achat,co.id_commande,co.prix,co.id_etat');
+        $this->db->join("etat e","co.id_etat = e.id_etat");
+        $this->db->from('commande co');
+        $query = $this->db->get();
+        return $query->result();
+    }
 }

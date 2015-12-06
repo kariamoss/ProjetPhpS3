@@ -41,4 +41,24 @@ class Users_m extends CI_Model {
         $this->db->where("email", $email);
         $this->db->update("user", $donnees);
     }
+
+    function insertClient($donnees){ // A VOIR SI ON LE FAIT
+        $sql="INSERT INTO users (nom,prix,id_type,photo)
+        values ('".$donnees['nom']."','".$donnees['prix']."',
+            ".$donnees['id_type'].",'".$donnees['photo']."'); ";
+        $this->db->query($sql);
+        return $this->db->insert("produit",$donnees);
+    }
+
+    public function getClients()
+    {
+        $this->db->select('u.id_user,u.email,u.password,u.login,u.nom,u.code_postal,u.ville,u.adresse,u.valide');
+        $this->db->from('user u');
+       // $this->db->join('typeProduit t', 'p.id_type=t.id_type');
+
+        $this->db->order_by('u.id_user');
+        $query = $this->db->get();
+        return $query->result();
+
+    }
 }

@@ -7,7 +7,7 @@ class Client_c extends CI_Controller {
         $this->load->database();
         $this->load->helper(array('form','url','text','string'));
         $this->load->library(array('session','form_validation','email'));
-        $this->load->model(array('users_m','Panier_m'));
+        $this->load->model(array('Users_m','Panier_m'));
     }
     public function index()
     {
@@ -17,6 +17,24 @@ class Client_c extends CI_Controller {
         $this->load->view('head_v');
         $this->load->view('clients/navClient_v');      
         $this->load->view('clients/client_index');
+        $this->load->view('foot_v');
+    }
+
+    public function creerClient()
+    {
+        $this->check_droit();
+        $this->load->view('head_v');
+        $this->load->view('admin/navAdmin_v');
+        $donnees['typeProduit']=$this->Users_m->getTypeProduitDropdown();
+        $this->load->view('admin/produit/form_create_produit_v',$donnees);
+        $this->load->view('foot_v');
+    }
+
+    public function displayClients(){
+        $this->load->view('head_v');
+        $this->load->view('admin/navAdmin_v');
+        $data['clients']=$this->Users_m->getClients();
+        $this->load->view('clients/table_clients_v',$data);
         $this->load->view('foot_v');
     }
 
