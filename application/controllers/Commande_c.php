@@ -33,14 +33,20 @@ class Commande_c extends CI_Controller
             redirect('Users_c');
         }
     }
-
     public function displayCommande(){
-
+        $this->check_droit();
         $this->load->view('head_v');
         $this->load->view('clients/navClient_v');
-        $data['commande']=$this->Commande_m->getCommande();
-        $this->load->view('clients/table_commande_v',$data);
-        $this->load->view('foot_v');
+        $commandeVide = $this->Commande_m->isCommandeVide();
+        if($commandeVide == 0){
+            $this->load->view('clients/table_commande_vide_v');
+            $this->load->view('foot_v');
+        }
+        else{
+            $data['commande'] = $this->Commande_m->getCommande();
+            $this->load->view('clients/table_commande_v', $data);
+            $this->load->view('foot_v');
+        }
     }
 
     public function displayCommandeAdmin(){

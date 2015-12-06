@@ -12,7 +12,7 @@
     <section class="top-bar-section"> 
       <ul class="left">
         <li class="divider"></li>
-        <li class="active"><a  href="#" >Nos produits</a></li>
+        <li class="active"><a  href="Produit_c/displayProduits" >Nos produits</a></li>
         <li class="divider"></li> 
         <li><a href="#">nous contacter</a> 
         </li> 

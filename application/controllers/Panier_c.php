@@ -81,9 +81,14 @@ class Panier_c extends CI_Controller
         redirect('/Panier_c/displayPanier');
     }
 
+    public function supprimerPanier(){
+        $this->Panier_m->supprimerPanier();
+    }
+
     public function validerPanier($id){
         $this->check_droit();
         $this->Panier_m->insertCommande($id);
+        $this->Panier_m->supprimerPanier();
         redirect('/Commande_c/displayCommande');
     }
 }
