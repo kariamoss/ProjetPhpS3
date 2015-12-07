@@ -53,25 +53,35 @@ class Produit_m extends CI_Model {
         $this->db->delete("produit", array("id" => $id));
     }
 
-    function getProduitById($id){   $sql = "SELECT * FROM produit WHERE id=".$id.";";
+    function getProduitById($id){   /*$sql = "SELECT * FROM produit WHERE id=".$id.";";
         $query = $this->db->query($sql);
         return  $query->result()[0]; // ou $query->row_array();
 
         $sql = "SELECT * FROM produit WHERE id = $id;";
         $query = $this->db->query($sql);
         $data=$query->row_array();
-        return $data;
+        return $data;*/
 
         return $this->db->get_where('produit', array('id' => $id),1,0)->row_array();
     }
 
-    function updateProduit($id, $donnees) {
+    function updateProduit($id, $produit) {
+      //  $this->db->where("id", $id);
+        //$this->db->update("produit", $donnees);
+        $data = array(
+            'id_type' => $produit['id_type'],
+            'nom' => $produit['nom'],
+            'prix' => $produit['prix'],
+            'photo' => $produit['photo'],
+            'dispo' => 1
+        );
+
         $this->db->where("id", $id);
-        $this->db->update("produit", $donnees);
-          $sql = "UPDATE produit
-            SET nom = \"".$donnees['nom']."\",prix =\"".$donnees['prix']."\" ,id_type= \"".$donnees['id_type']."\"
-            , photo = \"".$donnees['photo']."\" WHERE id = $id ;";
-            $this->db->query($sql);
+        $this->db->update("produit", $data);
+         /* $sql = "UPDATE produit
+            SET nom = \"'".$produit["nom"]."\',prix =\"".$produit["prix"]."\" ,id_type= \"".$produit["id_type"]."\"
+            , photo = \"".$produit["photo"]."\" WHERE id = $id ;";
+            $this->db->query($sql);*/
     }
 
     function verif_id_type($id_type){

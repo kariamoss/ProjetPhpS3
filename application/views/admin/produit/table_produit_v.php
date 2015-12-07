@@ -27,7 +27,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			</td>
 		<?php //if(isset($_SESSION['droit']) and $_SESSION['droit']=='DROITadmin'): ?>
 		<td>
-			<a href="<?php echo base_url();?>index.php/Produit_c/modifierProduit/<?= $value->id; ?>">modifier</a>
+			<a href="<?php echo site_url("Produit_c/modifierProduit")."/".$value->id; ?>">modifier</a>
 			<a href="<?php echo site_url("Produit_c/supprimerProduit")."/".$value->id; ?>">supprimer</a>
 		</td>
 		<?php //endif;?>

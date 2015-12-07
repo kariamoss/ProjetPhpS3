@@ -15,6 +15,11 @@ class Produit_c extends CI_Controller {
             redirect('Users_c');
         }
     }
+    public function check_droit_admin(){
+        if( $this->session->userdata('droit')!=2){
+            redirect('Users_c');
+        }
+    }
 
     public function displayProduits(){
         $this->load->view('head_v');
@@ -107,37 +112,31 @@ class Produit_c extends CI_Controller {
 
     public function modifierProduit($id)  
     { 
-        $this->check_droit();
+        $this->check_droit_admin();
         //echo "modifier le prodruit avec l'id :".$id;
         $this->load->view('head_v');
-        $this->load->view('admin/navAdmin_v');  
-        $donnees=$this->Produit_m->getProduitById($id);
+        $this->load->view('admin/navAdmin_v');
+        $donnees['produit']=$this->Produit_m->getProduitById($id);
         $donnees['typeProduit']=$this->Produit_m->getTypeProduitDropdown();
-        $this->load->view('admin/produit/form_update_produit_v',$donnees); 
+        $this->load->view('admin/produit/form_update_produit_v',$donnees);
         $this->load->view('foot_v'); 
     }
 
 
     public function validFormModifierProduit()  
     {   
-        $this->check_droit();
-        $id=$this->input->post('id'); 
-        $donnees= array(    
-                'nom'=>$this->input->post('nom'), 
-                'prix'=>$this->input->post('prix'),
-                'id_type'=>$this->input->post('id_type'),
-                'photo'=>$this->input->post('photo') 
-            ); 
+        $this->check_droit_admin();
+        $id=$this->input->post('id');
         
         $this->form_validation->set_rules('id','id','trim|numeric');
         $this->form_validation->set_rules('nom','nom','trim|required|min_length[2]|max_length[12]');
         $this->form_validation->set_rules('prix', 'prix', 'trim|required|numeric'); 
-        $this->form_validation->set_rules('id_type', 'type', 'required|callback_id_type_check');
+        //$this->form_validation->set_rules('id_type', 'type', 'required|callback_id_type_check');
 
         $this->form_validation->set_error_delimiters('<span class="error">','</span>');  
         
 
-        $donnees= array( 
+        $produit= array(
             'nom'=>$this->input->post('nom'), 
             'prix'=>$this->input->post('prix'),
             'id_type'=>$this->input->post('id_type'),
@@ -147,15 +146,15 @@ class Produit_c extends CI_Controller {
         if($this->form_validation->run() == False){
             $this->load->view('head_v');
             $this->load->view('admin/navAdmin_v'); 
-            $donnees['id']=$id;
+            $produit['id']=$id;
             $donnees['typeProduit']=$this->Produit_m->getTypeProduitDropdown();
-            $this->load->view('admin/produit/form_update_produit_v',$donnees); 
+            $this->load->view('admin/produit/form_update_produit_v',$produit);
             $this->load->view('foot_v');
         } 
         else 
         {        
-            $this->Produit_m->updateProduit($id,$donnees);
-            redirect('Produit_c/index');
+            $this->Produit_m->updateProduit($id,$produit);
+            redirect('');
         }
     }
 

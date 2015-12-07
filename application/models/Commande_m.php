@@ -35,4 +35,26 @@ class Commande_m extends CI_Model
         return $result->num_rows();
 
     }
+
+    function deleteCommande($id){
+        $this->db->delete("commande", array("id_commande" => $id));
+    }
+
+    function updateCommande($id_commande) {
+
+        $this->db->where("id_commande", $id_commande);
+        $this->db->set("id_etat",2);
+        $this->db->update("commande");
+
+    }
+    public function getCommandeById($id)
+    {
+        $this->db->select('e.libelle,co.date_achat,co.id_commande,co.prix,co.id_etat');
+        $this->db->join("etat e", "co.id_etat = e.id_etat");
+        $this->db->from('commande co');
+        $this->db->where('id_commande',$id);
+        $query = $this->db->get();
+        return $query->result();
+    }
+
 }

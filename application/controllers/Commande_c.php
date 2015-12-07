@@ -33,6 +33,13 @@ class Commande_c extends CI_Controller
             redirect('Users_c');
         }
     }
+
+    public function check_droit_admin(){
+        if( $this->session->userdata('droit')!=2){
+            redirect('Users_c');
+        }
+    }
+
     public function displayCommande(){
         $this->check_droit();
         $this->load->view('head_v');
@@ -56,6 +63,32 @@ class Commande_c extends CI_Controller
         $data['commande']=$this->Commande_m->getAllCommande();
         $this->load->view('clients/table_commande_v',$data);
         $this->load->view('foot_v');
+    }
+
+    public function administrationCommande(){
+
+        $this->check_droit_admin();
+        $this->load->view('head_v');
+        $this->load->view('admin/navAdmin_v');
+        $data['commande']=$this->Commande_m->getAllCommande();
+        $this->load->view('admin/table_commande_v',$data);
+        $this->load->view('foot_v');
+    }
+
+    public function supprimerCommande($id)
+    {
+        $this->check_droit_admin();
+        if(is_numeric($id))
+            $this->Commande_m->deleteCommande($id);
+        redirect('/Commande_c/administrationCommande');
+    }
+
+    public function validerCommande($id)
+    {
+        $this->check_droit_admin();
+        $data['commande']=$this->Commande_m->getCommandeById($id);
+        $donnees['etat']=$this->Commande_m->updateCommande($id);
+        redirect($this->administrationCommande());
     }
 
 }
