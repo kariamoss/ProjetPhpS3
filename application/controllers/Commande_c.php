@@ -55,6 +55,14 @@ class Commande_c extends CI_Controller
             $this->load->view('foot_v');
         }
     }
+    public function detailCommande($id){
+        $this->check_droit();
+        $this->load->view('head_v');
+        $this->load->view('clients/navClient_v');
+        $data['panier'] = $this->Commande_m->getPanierByIdCommande($id);
+        $this->load->view('clients/table_commande_detail_v', $data);
+        $this->load->view('foot_v');
+    }
 
     public function displayCommandeAdmin(){
 
@@ -90,5 +98,7 @@ class Commande_c extends CI_Controller
         $donnees['etat']=$this->Commande_m->updateCommande($id);
         redirect($this->administrationCommande());
     }
+
+
 
 }

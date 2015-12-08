@@ -48,7 +48,7 @@ class Panier_m extends CI_Model
  }
 
 
- //Verifie que le produit existe deja  dans le panier
+ //Verifie que le produit existe dejaï¿½ dans le panier
  //Si c'est le cas, renvoi un chiffre different de 0, sinon renvoie 0
  public function verif_id_ajout($id){
   $idUser = $this->session->userdata('id_user');
