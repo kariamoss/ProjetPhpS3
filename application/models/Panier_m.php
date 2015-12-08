@@ -14,11 +14,12 @@ class Panier_m extends CI_Model
  public function getPanier()
  {
   $idUser = $this->session->userdata('id_user');
-  $this->db->select('pa.quantite,tp.libelle,pa.id_produit, p.nom ,pa.prix,pa.id_panier,pa.id_user, p.photo');
+  $this->db->select('pa.quantite,tp.libelle, pa.id_produit, p.nom ,pa.prix,pa.id_panier,pa.id_user, p.photo');
   $this->db->from('panier pa');
   $this->db->join('produit p', 'pa.id_produit=p.id');
   $this->db->join('typeProduit tp', 'p.id_type = tp.id_type');
   $this->db->where("pa.id_user =".$idUser."");
+  $this->db->where("pa.id_commande", null);
   $this->db->order_by('p.nom');
   $query = $this->db->get();
   return $query->result();
@@ -40,7 +41,8 @@ class Panier_m extends CI_Model
 
  public function isPanierVide(){
   $idUser = $this->session->userdata('id_user');
-  $this->db->select('id_produit')->from('panier')->where("id_user =".$idUser."");
+  $this->db->select('id_produit')->from('panier pa')
+      ->where("id_user =".$idUser."")->where("pa.id_commande", null);
   $result = $this->db->get();
   return $result->num_rows();
  }
@@ -50,7 +52,8 @@ class Panier_m extends CI_Model
  //Si c'est le cas, renvoi un chiffre different de 0, sinon renvoie 0
  public function verif_id_ajout($id){
   $idUser = $this->session->userdata('id_user');
-  $this->db->select('id_produit')->from('panier')->where("id_produit",$id)->where("id_user =".$idUser."");
+  $this->db->select('id_produit')->from('panier')->where("id_produit",$id)->where("id_user =".$idUser."")
+      ->where("id_commande", null);
   $result = $this->db->get();
   return $result->num_rows();
  }
@@ -68,7 +71,7 @@ class Panier_m extends CI_Model
  //A appeler uniquement pour un produit qui n'existe pas encore dans le panier
  public function insertPanier($idProduit){
   $id_user = $this->session->userdata('id_user');
-  $id_commande = '0'; //TODO A redefinir apres
+  $id_commande = null;
   $quantite = '1';
   $date =  date('Y-m-d');
 
@@ -134,10 +137,25 @@ class Panier_m extends CI_Model
   return $prixTotal;
  }
 
+ public function updateIdCommande(){
+  $idUser = $this->session->userdata('id_user');
+  $this->db->select_max('id_commande')->from('commande')->where("id_user =".$idUser."");
+  $query = $this->db->get();
+  $idCommande['id_commande'] = $query->result();
+  $idCommande = intval($idCommande['id_commande'][0]->id_commande);
+
+  $data = array(
+   'id_commande' => $idCommande
+  );
+  $this->db->where('id_user', $idUser);
+  $this->db->where('id_commande', null);
+  $this->db->update('panier',$data);
+
+ }
+
 public function supprimerPanier()
 {
  $idUser = $this->session->userdata('id_user');
-
  $sql = "DELETE from panier where id_user = $idUser";
  $this->db->query($sql);
 }
