@@ -11,7 +11,7 @@ class Produit_c extends CI_Controller {
     }
 
     public function check_droit(){
-        if( $this->session->userdata('droit')!=2){
+        if( $this->session->userdata('droit')!=1){
             redirect('Users_c');
         }
     }
@@ -22,6 +22,7 @@ class Produit_c extends CI_Controller {
     }
 
     public function displayProduits(){
+        $this->check_droit();
         $this->load->view('head_v');
         $this->load->view('clients/navClient_v');
         $data['produit']=$this->Produit_m->getAllProduits();
@@ -33,7 +34,7 @@ class Produit_c extends CI_Controller {
 
     public function index()
     {
-        $this->check_droit();
+        $this->check_droit_admin();
         $this->load->view('head_v');
         $this->load->view('admin/navAdmin_v'); 
         $data['titre']="affichage du tableau produit";
@@ -44,7 +45,7 @@ class Produit_c extends CI_Controller {
     }
     public function creerProduit()  
     { 
-        $this->check_droit();
+        $this->check_droit_admin();
         $this->load->view('head_v');
         $this->load->view('admin/navAdmin_v');  
         $donnees['typeProduit']=$this->Produit_m->getTypeProduitDropdown();
@@ -56,7 +57,7 @@ class Produit_c extends CI_Controller {
 
     public function validFormCreerProduit()  
     {   
-        $this->check_droit();
+        $this->check_droit_admin();
         // set_rules(nomDuChamp(name),nomHumain,rêglesDeValidation) 
         $this->form_validation->set_rules('nom','nom','trim|required|min_length[2]|max_length[12]|is_unique[produit.nom]');
         $this->form_validation->set_rules('prix', 'prix', 'trim|required|numeric'); 
@@ -88,7 +89,7 @@ class Produit_c extends CI_Controller {
 
     public function id_type_check($id_type)
     {
-        $this->check_droit();
+        $this->check_droit_admin();
         $test_id_type=$this->Produit_m->verif_id_type($id_type);
         if ($test_id_type == 0)
         {
@@ -103,7 +104,7 @@ class Produit_c extends CI_Controller {
 
     public function supprimerProduit($id)  
     { 
-        $this->check_droit();
+        $this->check_droit_admin();
         if(is_numeric($id))
             $this->Produit_m->deleteProduit($id);
         redirect('/Produit_c/index');
