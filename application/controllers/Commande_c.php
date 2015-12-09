@@ -64,12 +64,22 @@ class Commande_c extends CI_Controller
         $this->load->view('foot_v');
     }
 
-    public function displayCommandeAdmin(){
+    public function detailCommandeAdmin($id){
+        $this->check_droit_admin();
+        $this->check_droit();
+        $this->load->view('head_v');
+        $this->load->view('clients/navClient_v');
+        $data['panier'] = $this->Commande_m->getPanierByIdCommande($id);
+        $this->load->view('admin/table_commande_detail_v', $data);
+        $this->load->view('foot_v');
+    }
 
+    public function displayCommandeAdmin(){
+        $this->check_droit_admin();
         $this->load->view('head_v');
         $this->load->view('admin/navAdmin_v');
         $data['commande']=$this->Commande_m->getAllCommande();
-        $this->load->view('clients/table_commande_v',$data);
+        $this->load->view('admin/table_commande_v',$data);
         $this->load->view('foot_v');
     }
 

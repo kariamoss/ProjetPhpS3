@@ -12,7 +12,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <table>
         <caption> Administration des commandes </caption>
         <thead>
-        <tr><th>Etat</th><th>Commande n&deg;</th><th>Prix</th><th>Date Commande</th><th>Actions</th>
+        <tr><th>Etat</th><th>Commande n&deg;</th><th>Prix</th><th>Date Commande</th><th>Valider</th><th>Supprimer</th><th>Détails</th>
         </tr>
         </thead>
         <tbody>
@@ -28,7 +28,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <?= $value->date_achat;?>
                     </td><td>
                         <a href="<?php echo site_url("Commande_c/validerCommande")."/".$value->id_commande; ?>">Valider la commande</a>
+                        </td><td>
                         <a href="<?php echo site_url("Commande_c/supprimerCommande")."/".$value->id_commande; ?>">supprimer</a>
+                    </td>
+                    <td>
+                        <a href="<?php echo site_url("Commande_c/detailCommande")."/".$value->id_commande; ?>"
+                        >Voir les détails de cette commande</a>
                     </td>
                     <?php //endif;?>
                 </tr>

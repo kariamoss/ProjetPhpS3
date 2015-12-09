@@ -17,8 +17,7 @@
       <a href="#">Gestion des commandes</a>
   
       <ul class="dropdown"> 
-        <li><a  href="<?php echo site_url('Commande_c/displayCommandeAdmin');?>" > consulter et préparer les commandes</a></li>
-        <li><a href="<?php echo site_url('Commande_c/administrationCommande');?>" >afficher/editer/supprimer des commandes</a></li>
+        <li><a  href="<?php echo site_url('Commande_c/displayCommandeAdmin');?>" > Consulter et préparer les commandes</a></li>
       </ul>
     </li>
 

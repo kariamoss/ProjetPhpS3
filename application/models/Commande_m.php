@@ -18,12 +18,10 @@ class Commande_m extends CI_Model
 
     public function getPanierByIdCommande($id)
     {
-        $idUser = $this->session->userdata('id_user');
         $this->db->select('pa.quantite,tp.libelle,pa.id_produit, p.nom ,pa.prix,pa.id_panier,pa.id_user, p.photo');
         $this->db->from('panier pa');
         $this->db->join('produit p', 'pa.id_produit=p.id');
         $this->db->join('typeProduit tp', 'p.id_type = tp.id_type');
-        $this->db->where("pa.id_user =".$idUser."");
         $this->db->where("pa.id_commande =".$id."");
         $this->db->order_by('p.nom', 'DESC');
         $query = $this->db->get();
