@@ -20,6 +20,7 @@
         <input type="password" name="pass2" value="<?= set_value('pass2');?>" />
         <?php echo form_error('pass2','<span class="error">',"</span>");?>
         <br>
+        <img src="<?php echo $captcha['image_src'];?>" alt="CAPTCHA security code" />
         <?php if(isset($erreur))echo '<span class="error">'.$erreur."</span>";?>
         <input type="submit" value="Envoyer" />
 

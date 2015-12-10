@@ -173,4 +173,10 @@ $config['charset']= 'utf-8';
 */
         }          
     }
+
+    function captcha(){
+        $this->load->library('captcha');
+        $data['captcha'] = $this->captcha->main();
+        $this->session->set_userdata('captcha_info', $data['captcha']);
+    }
 }
