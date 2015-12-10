@@ -24,8 +24,9 @@ class Users_c extends CI_Controller {
         $this->check_droit();
         $this->load->view('head_v');
         $this->load->view('nav_v');
+        $this->load->view('accueil_v');
         $this->load->view('foot_v');
-        
+
     }
 
     public function aff_connexion()
@@ -34,21 +35,20 @@ class Users_c extends CI_Controller {
         $this->load->view('head_v');
         $this->load->view('nav_v');
         $this->load->view('form_connexion_v');
-        $this->load->view('foot_v');       
+        $this->load->view('foot_v');
     }
 
 
     public function form_valid_connexion()
     {
         $this->check_droit();
-        $this->form_validation->set_rules('login','login','trim|required|is_unique[user.login]');
+        $this->form_validation->set_rules('login','login','trim|required');
         $this->form_validation->set_rules('pass','Mot de passe','trim|required');
         $donnees= array(
-                'id_user'=>$this->input->post('id_user'),
-                'login'=>$this->input->post('login'),
-                'pass'=>$this->input->post('pass')
-            );
-        if($this->form_validation->run() == False){   
+            'login'=>$this->input->post('login'),
+            'pass'=>$this->input->post('pass')
+        );
+        if($this->form_validation->run() == False){
             $this->load->view('head_v');
             $this->load->view('nav_v');
             $this->load->view('form_connexion_v',$donnees);
@@ -56,33 +56,35 @@ class Users_c extends CI_Controller {
         }
         else {
             $donnees_session=array();
-            if(($donnees_session=$this->Users_m->verif_connexion($donnees)) != False)                          // and valide ==1
-               {
-                   $this->session->set_userdata($donnees_session);
-                   redirect('Users_c');
-               }
-               else{
-                   $donnees['erreur']="mot de passe ou login incorrect";
-                   $this->load->view('head_v');
-                   $this->load->view('nav_v');
-                   $this->load->view('form_connexion_v',$donnees);
-                   $this->load->view('foot_v');
-               }
-        }      
+            if(($donnees_session=$this->Users_m->verif_connexion($donnees)) != False)// and valide ==1
+            {
+                $this->session->set_userdata($donnees_session);
+                redirect('Users_c');
+            }
+            else{
+                $donnees['erreur']="mot de passe ou login incorrect";
+                $this->load->view('head_v');
+                $this->load->view('nav_v');
+                $this->load->view('form_connexion_v',$donnees);
+                $this->load->view('foot_v');
+
+            }
+        }
     }
 
     public function deconnexion()
     {
         $this->session->sess_destroy();
-        redirect('Users_c');
+        redirect();
     }
+
 
     public function modifierCoordonnes()
     {
         $this->load->view('head_v');
-        $this->load->view('clients/navClient_v');
-        $donnees['coordonnees']=$this->Users_m->getClientCoordonnes();
-        $this->load->view('clients/form_update_coordonnees_v',$donnees);
+        $this->load->view('clients/coordonnes/navClient_coordonnes_v');
+        $data['coordonnes']=$this->Users_m->getClientCoordonnes();
+        $this->load->view('clients/coordonnes/form_update_coordonnes_v',$data);
         $this->load->view('foot_v');
 
     }
@@ -116,9 +118,10 @@ class Users_c extends CI_Controller {
 
 
         $this->Users_m->updateCoordonnes($donnees);
-        redirect('Produit_c/displayProduits');
+        redirect('Produit_c/afficherProduitClient');
 
     }
+
 
 
     public function inscription()
@@ -130,32 +133,33 @@ class Users_c extends CI_Controller {
         $this->load->view('users_inscription',$donnees);
         $this->load->view('foot_v');
     }
+
     public function validFormInscription()
     {
         $this->form_validation->set_rules('login','login','trim|required|is_unique[user.login]');
         $this->form_validation->set_rules('email','Email','trim|required|valid_email|is_unique[user.email]');
         $this->form_validation->set_rules('pass','Mot de passe','trim|required|matches[pass2]');
         $this->form_validation->set_rules('pass2','Mot de passe','trim|required');
-                /* rappeler la vue à la fin de la méthode */
+        /* rappeler la vue à la fin de la méthode */
         $donnees= array(
-                        'login'=>$this->input->post('login'),
-                        'email'=>$this->input->post('email'),
-                        'pass'=>$this->input->post('pass')   // encryptage MD5 ou autre à faire
-                        );
+            'login'=>$this->input->post('login'),
+            'email'=>$this->input->post('email'),
+            'pass'=>$this->input->post('pass')   // encryptage MD5 ou autre à faire
+        );
         if($this->form_validation->run() == False){
             $this->load->view('head_v');
             $this->load->view('nav_v');
             $donnees['titre']="inscription";
             $this->load->view('users_inscription',$donnees);
-            $this->load->view('foot_v');   
+            $this->load->view('foot_v');
         }
         else{
-           
+
             $donnees['droit']=1;
             $donnees['valide']=0;
             $this->Users_m->add_user($donnees);
             redirect(base_url());
-        }  
+        }
     }
 
     public function mdp_oublie()
@@ -184,8 +188,8 @@ class Users_c extends CI_Controller {
     {
         $this->form_validation->set_rules('email','Email','trim|required|valid_email||callback_check_email');
         $donnees= array(
-                        'email'=>$this->input->post('email')
-                    );
+            'email'=>$this->input->post('email')
+        );
         if($this->form_validation->run() == False){
             $this->load->view('head_v');
             $this->load->view('nav_v');
@@ -197,7 +201,7 @@ class Users_c extends CI_Controller {
             $this->email->from('noreply@monsite.com','Mon site');
             $this->email->to($donnees['email'],'mot de passe oublié');
             $this->email->subject('votre mot de passe');
-                        // calcul du mot de passe random
+            // calcul du mot de passe random
             $motdepasse=mt_rand(100000,1000000);
             $this->email->message('<p>voici un nouveau de passe </p>....'.$motdepasse);
             $this->email->send();
@@ -207,19 +211,13 @@ class Users_c extends CI_Controller {
 
             /*
             dans application/config : créer un fichier : email.php avec comme contenu
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');           
+<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 $config['protocol']='smtp';
 $config['smtp_host']='smtp.neuf.fr';
 $config['smtp_port']=25;
 $config['emailtype']='html';
 $config['charset']= 'utf-8';
 */
-        }          
-    }
-
-    function captcha(){
-        $this->load->library('captcha');
-        $data['captcha'] = $this->captcha->main();
-        $this->session->set_userdata('captcha_info', $data['captcha']);
+        }
     }
 }

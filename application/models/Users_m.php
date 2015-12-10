@@ -61,4 +61,26 @@ class Users_m extends CI_Model {
         return $query->result();
 
     }
+
+    public function getClientCoordonnes(){
+        $idUser = $this->session->userdata('id_user');
+        return $this->db->get_where('user', array('id_user' => $idUser),1,0)->row_array();
+    }
+
+    public function updateCoordonnes($donnees) {
+        $idUser = $this->session->userdata('id_user');
+        $data = array(
+            'id_user' => $idUser,
+            'email' => $donnees['email'],
+            'password' => $donnees['password'],
+            'login' => $donnees['login'],
+            'nom' => $donnees['nom'],
+            'code_postal' => $donnees['code_postal'],
+            'ville' => $donnees['ville'],
+            'adresse' => $donnees['adresse']
+        );
+
+        $this->db->where("id_user", $idUser);
+        $this->db->update("user", $data);
+    }
 }
