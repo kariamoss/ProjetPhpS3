@@ -17,7 +17,7 @@ class Produit_m extends CI_Model {
             $query=$this->db->query($sql);
             return $query->result(); */
 
-        $this->db->select('p.id, t.libelle, p.nom, p.prix, p.photo');
+        $this->db->select('p.id, t.libelle, p.nom, p.stock, p.prix, p.photo');
         $this->db->from('produit p');
         $this->db->join('typeProduit t', 'p.id_type=t.id_type');
 

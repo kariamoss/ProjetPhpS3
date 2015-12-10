@@ -52,7 +52,6 @@ class Panier_c extends CI_Controller
         }
     }
 
-    //TODO Décrémenter le panier et vérifier si il reste du stock
     public function ajouterAuPanier($id)
     {
         $this->check_droit();
@@ -62,7 +61,12 @@ class Panier_c extends CI_Controller
             $this->Panier_m->insertPanier($id);
         }
         else{
-            $this->Panier_m->updatePanier($id);
+            $stock = $this->Panier_m->getStock($id);
+            $quantity = $this->Panier_m->getQuantite($id);
+
+            if ($stock>$quantity){
+                $this->Panier_m->updatePanier($id);
+            }
         }
         redirect('Panier_c/displayPanier');
     }

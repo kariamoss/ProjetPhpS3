@@ -10,7 +10,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <table>
         <caption>Recapitulatifs des produits</caption>
         <thead>
-        <tr><th>Marque</th><th>Nom</th><th>Prix</th><th>Photo</th><th>Action</th>
+        <tr><th>Marque</th><th>Nom</th><th>Prix</th><th>Stock restant</th><th>Photo</th><th>Action</th>
         </tr>
         </thead>
         <tbody>
@@ -23,6 +23,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <?= $value->nom; ?>
                     </td><td>
                         <?= $value->prix; ?>
+                    </td><td>
+                        <?= $value->stock; ?>
                     </td><td>
                         <img style="width:40px;height:40px"
                              src="<?php echo base_url();?>img/<?= $value->photo; ?>"

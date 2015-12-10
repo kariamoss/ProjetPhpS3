@@ -159,6 +159,41 @@ public function supprimerPanier()
  $sql = "DELETE from panier where id_user = $idUser";
  $this->db->query($sql);
 }
+ public function getQuantite($idProduit)
+ {
+  $idUser = $this->session->userdata('id_user');
+  $this->db->select('panier.quantite');
+  $this->db->from('panier');
+  $this->db->where("id_user", $idUser);
+  $this->db->where("id_commande", null);
+  $this->db->where('id_produit', $idProduit);
+  $query = $this->db->get();
+  $quantite['quantite']= $query->result();
+  if (empty($quantite['quantite'])){
+   return 0;
+  }
+  else
+  {
+   $quantite = intval($quantite['quantite'][0]->quantite);
+   return $quantite;
+  }
+ }
+
+ public function getStock($idProduct){
+  $this->db->select('stock');
+  $this->db->from('produit');
+  $this->db->where("id", $idProduct);
+  $query = $this->db->get();
+  $stock['stock']= $query->result();
+  if (empty($stock['stock'])){
+   return 0;
+  }
+  else
+  {
+   $stock = intval($stock['stock'][0]->stock);
+   return $stock;
+  }
+ }
 
 }
 ?>
