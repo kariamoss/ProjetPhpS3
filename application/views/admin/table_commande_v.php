@@ -32,7 +32,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <a href="<?php echo site_url("Commande_c/supprimerCommande")."/".$value->id_commande; ?>">supprimer</a>
                     </td>
                     <td>
-                        <a href="<?php echo site_url("Commande_c/detailCommande")."/".$value->id_commande; ?>"
+                        <a href="<?php echo site_url("Commande_c/detailCommandeAdmin")."/".$value->id_commande; ?>"
                         >Voir les détails de cette commande</a>
                     </td>
                     <?php //endif;?>

@@ -66,7 +66,6 @@ class Commande_c extends CI_Controller
 
     public function detailCommandeAdmin($id){
         $this->check_droit_admin();
-        $this->check_droit();
         $this->load->view('head_v');
         $this->load->view('clients/navClient_v');
         $data['panier'] = $this->Commande_m->getPanierByIdCommande($id);
