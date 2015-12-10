@@ -4,6 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <a href="<?php echo base_url();?>index.php/Produit_c/creerProduit/"> Ajouter un produit </a>
 <table>
 <caption>Recapitulatifs des produits</caption>
+	</br></br><span style="color:red" > Les produits en rouge doivent être réapprovisionnés</span></br>
 <thead>
 <tr><th>id</th><th>type</th><th>nom</th><th>Stock restant</th><th>prix</th><th>photo</th>
 
@@ -12,18 +13,28 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </thead>
 <tbody>
 <?php  // print_r($produit);?>
+
 <?php if( $produit != NULL): ?>
+
 	<?php foreach ($produit as $value): ?>
 		<tr><td>
-		<?php echo $value->id; ?>
+				<span <?php if($value->stock <= 5){ echo 'style="color:red"'; }
+				else { echo 'style="color:black"'; } ?> >
+		<?php echo $value->id; ?></span>
 		</td><td>
-		<?= $value->libelle; ?>
+				<span <?php if($value->stock <= 5){ echo 'style="color:red"'; }
+				else { echo 'style="color:black"'; } ?> >
+		<?= $value->libelle; ?></span>
 		</td><td>
-		<?= $value->nom; ?>
+		<span <?php if($value->stock <= 5){ echo 'style="color:red"'; }
+		else { echo 'style="color:black"'; } ?> ><?= $value->nom; ?></span>
 		</td><td>
-				<?= $value->stock; ?>
-			</td><td>
-		<?= $value->prix; ?>
+			<span <?php if($value->stock <= 5){ echo 'style="color:red"'; }
+				else { echo 'style="color:black"'; } ?> ><?= $value->stock; ?> </span>
+		</td><td>
+				<span <?php if($value->stock <= 5){ echo 'style="color:red"'; }
+				else { echo 'style="color:black"'; } ?> >
+		<?= $value->prix; ?></span>
 		</td>><td>
 				<img style="width:40px;height:40px" src="<?php echo base_url();?>img/<?= $value->photo; ?>" alt="image de <?= $value->libelle; ?>" >
 			</td>
@@ -36,7 +47,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		</tr>
 	<?php endforeach; ?>
 <?php endif; ?>
-<tbody>
+</tbody>
 </table>
 </div>
 

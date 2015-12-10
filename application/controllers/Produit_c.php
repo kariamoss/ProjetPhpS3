@@ -159,7 +159,7 @@ class Produit_c extends CI_Controller {
             $this->load->view('admin/navAdmin_v'); 
             $produit['id']=$id;
             $donnees['typeProduit']=$this->Produit_m->getTypeProduitDropdown();
-            $this->load->view('admin/produit/form_update_produit_v',$produit);
+            $this->load->view('admin/produit/form_update_produit_v',$produit,$donnees);
             $this->load->view('foot_v');
         } 
         else 
