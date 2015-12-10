@@ -30,6 +30,14 @@ class Produit_c extends CI_Controller {
         $this->load->view('foot_v');
     }
 
+    public function displayProduitsAdmin(){
+        $this->check_droit_admin();
+        $this->load->view('head_v');
+        $this->load->view('admin/navAdmin_v');
+        $data['produit']=$this->Produit_m->getAllProduitsAdmin();
+        $this->load->view('admin/produit/table_produit_v',$data);
+        $this->load->view('foot_v');
+    }
 
 
     public function index()
@@ -38,7 +46,7 @@ class Produit_c extends CI_Controller {
         $this->load->view('head_v');
         $this->load->view('admin/navAdmin_v'); 
         $data['titre']="affichage du tableau produit";
-        $data['produit']=$this->Produit_m->getAllProduits();
+        $data['produit']=$this->Produit_m->getAllProduitsAdmin();
         $this->load->view('admin/produit/table_produit_v',$data);
         $this->load->view('foot_v');
         
@@ -60,17 +68,19 @@ class Produit_c extends CI_Controller {
         $this->check_droit_admin();
         // set_rules(nomDuChamp(name),nomHumain,rêglesDeValidation) 
         $this->form_validation->set_rules('nom','nom','trim|required|min_length[2]|max_length[12]|is_unique[produit.nom]');
-        $this->form_validation->set_rules('prix', 'prix', 'trim|required|numeric'); 
+        $this->form_validation->set_rules('id_type', 'id_type', 'trim|required|is_natural_no_zero');
+        $this->form_validation->set_rules('prix', 'prix', 'trim|required|numeric');
+        $this->form_validation->set_rules('stock', 'stock', 'trim|required|numeric|integer');
         $this->form_validation->set_rules('id_type', 'type', 'required|callback_id_type_check');
 
         $this->form_validation->set_error_delimiters('<span class="error">','</span>');  
-        
 
         $donnees= array( 
-            'nom'=>$this->input->post('nom'), 
+            'nom'=>$this->input->post('nom'),
             'prix'=>$this->input->post('prix'),
             'id_type'=>$this->input->post('id_type'),
-            'photo'=>$this->input->post('photo') 
+            'stock'=>$this->input->post('stock'),
+            'photo'=>$this->input->post('photo')
         );
         
         if($this->form_validation->run() == False){
@@ -83,7 +93,7 @@ class Produit_c extends CI_Controller {
         else 
         {        
             $this->Produit_m->insertProduit($donnees); 
-            redirect('Produit_c/index'); 
+            redirect('Produit_c/index');
         }
     }
 
@@ -125,7 +135,7 @@ class Produit_c extends CI_Controller {
 
 
     public function validFormModifierProduit()  
-    {   
+    {
         $this->check_droit_admin();
         $id=$this->input->post('id');
         
@@ -135,11 +145,11 @@ class Produit_c extends CI_Controller {
         //$this->form_validation->set_rules('id_type', 'type', 'required|callback_id_type_check');
 
         $this->form_validation->set_error_delimiters('<span class="error">','</span>');  
-        
 
         $produit= array(
             'nom'=>$this->input->post('nom'), 
             'prix'=>$this->input->post('prix'),
+            'stock'=>$this->input->post('stock'),
             'id_type'=>$this->input->post('id_type'),
             'photo'=>$this->input->post('photo') 
         ); 
@@ -155,7 +165,7 @@ class Produit_c extends CI_Controller {
         else 
         {        
             $this->Produit_m->updateProduit($id,$produit);
-            redirect('');
+            redirect('Produit_c/displayProduitsAdmin');
         }
     }
 

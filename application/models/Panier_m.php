@@ -152,7 +152,6 @@ class Panier_m extends CI_Model
   $this->db->where('id_user', $idUser);
   $this->db->where('id_commande', null);
   $this->db->update('panier',$data);
-
  }
 
  public function updateStock(){
@@ -163,6 +162,10 @@ class Panier_m extends CI_Model
    $stock = $this->Panier_m->getStock($value->id);
    $quantite = $this->Panier_m->getQuantite($value->id);
    $stock = $stock-$quantite;
+   if($stock < 0){
+    redirect('Panier_c/displayPanier');
+    echo("Erreur : Le produit n'est plus disponible");
+   }
 
    $data = array(
        'stock' => $stock

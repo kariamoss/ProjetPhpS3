@@ -24,7 +24,7 @@
     <li class="has-dropdown">
       <a href="#">Gestion des produits</a> 
       <ul class="dropdown"> 
-        <li><a  href="<?php echo site_url('Produit_c');?>" >afficher/editer/supprimer les produits</a></li>
+        <li><a  href="<?php echo site_url('Produit_c/displayProduitsAdmin');?>" >afficher/editer/supprimer les produits</a></li>
         <li><a class="SousMenu" href="<?php echo site_url('Produit_c/creerProduit');?>" > créer un produit</a></li>  
       </ul>
     </li>

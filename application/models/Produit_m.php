@@ -24,8 +24,17 @@ class Produit_m extends CI_Model {
         $this->db->order_by('p.nom');
         $query = $this->db->get();
         return $query->result();
-
     }
+    public function getAllProduitsAdmin()
+    {
+        $this->db->select('*');
+        $this->db->from('produit p');
+        $this->db->join('typeProduit t', 'p.id_type=t.id_type');
+        $this->db->order_by('p.nom');
+        $query = $this->db->get();
+        return $query->result();
+    }
+
 
     public function getProduit($idProduit)
     {
@@ -72,12 +81,13 @@ class Produit_m extends CI_Model {
             'id_type' => $produit['id_type'],
             'nom' => $produit['nom'],
             'prix' => $produit['prix'],
+            'stock' => $produit['stock'],
             'photo' => $produit['photo'],
-            'dispo' => 1
         );
 
         $this->db->where("id", $id);
         $this->db->update("produit", $data);
+
          /* $sql = "UPDATE produit
             SET nom = \"'".$produit["nom"]."\',prix =\"".$produit["prix"]."\" ,id_type= \"".$produit["id_type"]."\"
             , photo = \"".$produit["photo"]."\" WHERE id = $id ;";
