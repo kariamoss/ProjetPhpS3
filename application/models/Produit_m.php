@@ -20,7 +20,7 @@ class Produit_m extends CI_Model {
         $this->db->select('p.id, t.libelle, p.nom, p.stock, p.prix, p.photo');
         $this->db->from('produit p');
         $this->db->join('typeProduit t', 'p.id_type=t.id_type');
-
+        $this->db->where('p.stock !=', 0 );
         $this->db->order_by('p.nom');
         $query = $this->db->get();
         return $query->result();
