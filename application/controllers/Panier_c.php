@@ -91,6 +91,7 @@ class Panier_c extends CI_Controller
 
     public function validerPanier($id){
         $this->check_droit();
+        $this->Panier_m->updateStock();
         $this->Panier_m->insertCommande($id);
         $this->Panier_m->updateIdCommande();
         redirect('/Commande_c/displayCommande');

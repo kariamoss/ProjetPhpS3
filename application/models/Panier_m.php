@@ -14,7 +14,7 @@ class Panier_m extends CI_Model
  public function getPanier()
  {
   $idUser = $this->session->userdata('id_user');
-  $this->db->select('pa.quantite,tp.libelle, pa.id_produit, p.nom ,pa.prix,pa.id_panier,pa.id_user, p.photo');
+  $this->db->select('*');
   $this->db->from('panier pa');
   $this->db->join('produit p', 'pa.id_produit=p.id');
   $this->db->join('typeProduit tp', 'p.id_type = tp.id_type');
@@ -66,6 +66,8 @@ class Panier_m extends CI_Model
   WHERE id_user = \"".$idUser."\" AND id_produit = \"".$idProduit."\";";
   $this->db->query($sql);
  }
+
+
 
 
  //A appeler uniquement pour un produit qui n'existe pas encore dans le panier
@@ -153,6 +155,24 @@ class Panier_m extends CI_Model
 
  }
 
+ public function updateStock(){
+  $produit = $this->Panier_m->getPanier();
+
+  foreach ($produit as $value):
+
+   $stock = $this->Panier_m->getStock($value->id);
+   $quantite = $this->Panier_m->getQuantite($value->id);
+   $stock = $stock-$quantite;
+
+   $data = array(
+       'stock' => $stock
+   );
+   $this->db->where('id', $value->id);
+   $this->db->update('produit',$data);
+  endforeach;
+
+ }
+
 public function supprimerPanier()
 {
  $idUser = $this->session->userdata('id_user');
@@ -179,10 +199,10 @@ public function supprimerPanier()
   }
  }
 
- public function getStock($idProduct){
+ public function getStock($idProduit){
   $this->db->select('stock');
   $this->db->from('produit');
-  $this->db->where("id", $idProduct);
+  $this->db->where("id", $idProduit);
   $query = $this->db->get();
   $stock['stock']= $query->result();
   if (empty($stock['stock'])){
